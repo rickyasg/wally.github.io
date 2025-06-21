@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wally Friends - Grupo de Jugadores</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e6b3a;
+            --secondary: #f39c12;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --court: #8bc34a;
+            --court-line: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: var(--primary);
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+        
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .hero {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%238bc34a"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="white" stroke-width="2"/></svg>');
+            background-size: 30px 30px;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 107, 58, 0.85);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .hero h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .btn:hover {
+            background: transparent;
+            border-color: var(--secondary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 0 20px;
+            background: white;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--secondary);
+            z-index: 1;
+        }
+        
+        .rules-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .rule-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .rule-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .rule-icon {
+            background: var(--primary);
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .rule-content {
+            padding: 25px;
+        }
+        
+        .rule-content h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .players-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .player-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .player-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .player-img {
+            height: 200px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+        }
+        
+        .player-info {
+            padding: 20px;
+        }
+        
+        .player-info h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .player-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .player-stats {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .schedule {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 2rem;
+        }
+        
+        .schedule-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .match {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .match:last-child {
+            border-bottom: none;
+        }
+        
+        .teams {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .team-icon {
+            background: var(--secondary);
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .vs {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        
+        .match-info {
+            text-align: right;
+        }
+        
+        .match-date {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .match-location {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .news-img {
+            height: 180px;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-size: 3rem;
+        }
+        
+        .news-content {
+            padding: 25px;
+        }
+        
+        .news-date {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .news-content h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .contact-info {
+            background: var(--primary);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .contact-form form {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: left;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #444;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            text-align: center;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .match {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .match-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-volleyball-ball"></i>
+                <h1>Wally <span>Friends</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#inicio" class="active">Inicio</a></li>
+                    <li><a href="#reglas">Reglas</a></li>
+                    <li><a href="#jugadores">Jugadores</a></li>
+                    <li><a href="#calendario">Calendario</a></li>
+                    <li><a href="#noticias">Noticias</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h2>¡Bienvenidos al Grupo de Wally!</h2>
+            <p>El lugar donde la pasión por el deporte se encuentra con la amistad</p>
+            <a href="#jugadores" class="btn">Ver Jugadores</a>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section id="reglas" class="container">
+        <div class="section-title">
+            <h2>Reglas del Juego</h2>
+        </div>
+        
+        <div class="rules-container">
+            <div class="rule-card">
+                <div class="rule-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="rule-content">
+                    <h3>Formato de Equipos</h3>
+                    <p>Los equipos estarán compuestos por 2 jugadores cada uno. Se permite un máximo de 2 sustitutos por equipo.</p>
+                </div>
+            </div>
+            
+            <div class="rule-card">
+                <div class="rule-icon">
+                    <i class="fas fa-stopwatch"></i>
+                </div>
+                <div class="rule-content">
+                    <h3>Duración del Partido</h3>
+                    <p>Cada partido consta de 3 sets de 15 puntos cada uno. Se debe ganar por diferencia de 2 puntos si hay empate a 14.</p>
+                </div>
+            </div>
+            
+            <div class="rule-card">
+                <div class="rule-icon">
+                    <i class="fas fa-flag"></i>
+                </div>
+                <div class="rule-content">
+                    <h3>Sistema de Puntuación</h3>
+                    <p>Solo el equipo que sirve puede anotar puntos. El servicio rota entre jugadores después de cada punto ganado.</p>
+                </div>
+            </div>
+            
+            <div class="rule-card">
+                <div class="rule-icon">
+                    <i class="fas fa-ban"></i>
+                </div>
+                <div class="rule-content">
+                    <h3>Faltas y Sanciones</h3>
+                    <p>Se considera falta tocar la red, invadir la cancha contraria o golpear la pelota dos veces consecutivas. 3 faltas resultan en pérdida de punto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Players Section -->
+    <section id="jugadores" class="container">
+        <div class="section-title">
+            <h2>Nuestros Jugadores</h2>
+        </div>
+        
+        <div class="players-container">
+            <div class="player-card">
+                <div class="player-img">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="player-info">
+                    <h3>Carlos Martínez</h3>
+                    <p>Capitán del equipo</p>
+                    <div class="player-stats">
+                        <div class="stat">
+                            <div class="stat-value">87%</div>
+                            <div class="stat-label">Victorias</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">45</div>
+                            <div class="stat-label">Partidos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="player-card">
+                <div class="player-img">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="player-info">
+                    <h3>María López</h3>
+                    <p>Subcapitana</p>
+                    <div class="player-stats">
+                        <div class="stat">
+                            <div class="stat-value">82%</div>
+                            <div class="stat-label">Victorias</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Partidos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="player-card">
+                <div class="player-img">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="player-info">
+                    <h3>Javier Rodríguez</h3>
+                    <p>Jugador ofensivo</p>
+                    <div class="player-stats">
+                        <div class="stat">
+                            <div class="stat-value">78%</div>
+                            <div class="stat-label">Victorias</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">38</div>
+                            <div class="stat-label">Partidos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="player-card">
+                <div class="player-img">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="player-info">
+                    <h3>Laura García</h3>
+                    <p>Especialista en defensa</p>
+                    <div class="player-stats">
+                        <div class="stat">
+                            <div class="stat-value">80%</div>
+                            <div class="stat-label">Victorias</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">40</div>
+                            <div class="stat-label">Partidos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="calendario" class="schedule">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: white;">Próximos Partidos</h2>
+            </div>
+            
+            <div class="schedule-container">
+                <div class="match">
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-icon">A</div>
+                            <div>Águilas</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-icon">T</div>
+                            <div>Tigres</div>
+                        </div>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">Sábado 25 de Junio, 16:00</div>
+                        <div class="match-location">Polideportivo Municipal</div>
+                    </div>
+                </div>
+                
+                <div class="match">
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-icon">L</div>
+                            <div>Leones</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-icon">A</div>
+                            <div>Águilas</div>
+                        </div>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">Domingo 3 de Julio, 11:00</div>
+                        <div class="match-location">Cancha Central</div>
+                    </div>
+                </div>
+                
+                <div class="match">
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-icon">T</div>
+                            <div>Tigres</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-icon">L</div>
+                            <div>Leones</div>
+                        </div>
+                    </div>
+                    <div class="match-info">
+                        <div class="match-date">Sábado 9 de Julio, 17:30</div>
+                        <div class="match-location">Polideportivo Municipal</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="noticias" class="container">
+        <div class="section-title">
+            <h2>Últimas Noticias</h2>
+        </div>
+        
+        <div class="news-container">
+            <div class="news-card">
+                <div class="news-img">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">15 de Junio, 2025</span>
+                    <h3>Torneo de Verano 2025</h3>
+                    <p>¡Anunciamos nuestro primer torneo oficial de verano! Inscripciones abiertas hasta el 30 de junio. Premios para los primeros tres lugares.</p>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-img">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">5 de Junio, 2025</span>
+                    <h3>Nuevos Integrantes</h3>
+                    <p>Damos la bienvenida a 4 nuevos jugadores que se unen a nuestro grupo. ¡Estamos muy contentos de ampliar nuestra familia de Wally!</p>
+                </div>
+            </div>
+            
+            <div class="news-card">
+                <div class="news-img">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">28 de Mayo, 2025</span>
+                    <h3>Cambios en el Calendario</h3>
+                    <p>Debido a condiciones climáticas, hemos reajustado las fechas de los próximos partidos. Por favor revisen la sección de calendario.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="container">
+        <div class="section-title">
+            <h2>Contacto</h2>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>¿Quieres unirte a nuestro grupo?</h3>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h4>Ubicación</h4>
+                        <p>Polideportivo Municipal, Calle Deportes 123</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h4>Teléfono</h4>
+                        <p>+34 912 345 678</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h4>Email</h4>
+                        <p>info@wallyfriends.com</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <h4>Horarios</h4>
+                        <p>Martes y Jueves: 18:00 - 21:00<br>Sábados: 10:00 - 14:00</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h3>Envíanos un mensaje</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="text" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" placeholder="Teléfono">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Tu mensaje" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">Wally Friends</div>
+                <p>Grupo de amigos apasionados por el deporte del Wally. Organizamos partidos, torneos y eventos sociales relacionados con nuestro deporte favorito.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#reglas">Reglas del Juego</a></li>
+                    <li><a href="#jugadores">Jugadores</a></li>
+                    <li><a href="#calendario">Calendario</a></li>
+                    <li><a href="#noticias">Noticias</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Recursos</h3>
+                <ul>
+                    <li><a href="#">Técnicas de Juego</a></li>
+                    <li><a href="#">Entrenamientos</a></li>
+                    <li><a href="#">Equipamiento</a></li>
+                    <li><a href="#">Reglamento Oficial</a></li>
+                    <li><a href="#">Galería de Fotos</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 Wally Friends. Todos los derechos reservados. | Diseñado con pasión por el deporte
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Update active link
+                document.querySelectorAll('nav a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Highlight active section in navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if(pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
